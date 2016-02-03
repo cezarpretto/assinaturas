@@ -1,0 +1,168 @@
+<div class="row">
+  <div class="col-sm-4 col-sm-offset-4">
+    <img src="http://planosassessoria.com.br/certificados/logo.png" alt="Logo Planos" class="img-responsive" />
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12 text-center">
+    <h1>Gerador de assinaturas</h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-6">
+    <div class="form-group">
+      <label for="txtUnidade">Selecione uma assinatura:</label>
+      <div class="input-group">
+        <select class="form-control" ng-disabled="assinaturas.length === 0 || main.lockInput === false" ng-model="main.assinatura" ng-options="val as val.nome for val in assinaturas"></select>
+        <div class="input-group-btn">
+          <button type="button" class="btn btn-primary" title="Nova Assinatura" ng-click="main.novaAssinatura()">
+            <i class="fa fa-plus"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<form name="frmNovaAssinatura" ng-submit="main.salvar()">
+  <div class="containner-form">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="txtNome">Nome:</label>
+          <input type="text" class="form-control" id="txtNome" ng-model="main.assinatura.nome" ng-disabled="main.lockInput" required="required">
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="txtCargo">Cargo:</label>
+          <input type="text" class="form-control" id="txtCargo" ng-model="main.assinatura.cargo" ng-disabled="main.lockInput" required="required">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="txtUnidade">Unidade:</label>
+          <div class="input-group">
+            <select class="form-control" ng-disabled="main.lockInput" ng-model="main.assinatura.unidade.label" ng-options="val.label as val.label for val in unidades" required="required"></select>
+            <div class="input-group-btn">
+              <button type="button" class="btn btn-primary" title="Nova Unidade" ng-click="main.novaUnidade()">
+                <i class="fa fa-plus"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="txtEmail">Email:</label>
+          <input type="text" class="form-control" id="txtEmail" ng-model="main.assinatura.email" ng-disabled="main.lockInput" required="required">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="txtFixo">Tel. Fixo:</label>
+          <input type="text" class="form-control" id="txtFixo" ng-model="main.assinatura.fixo" mask="(99) 9999-9999" ng-disabled="main.lockInput" required="required">
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="txtCelular">Celular:</label>
+          <input type="text" class="form-control" id="txtCelular" ng-model="main.assinatura.celular" mask="(99) 9999-9999" ng-disabled="main.lockInput" required="required">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <button type="submit" class="btn btn-primary" ng-disabled="frmNovaAssinatura.$invalid">
+          <i class="fa fa-floppy-o"></i> Salvar
+        </button>
+        <button type="button" class="btn btn-warning" ng-disabled="frmNovaAssinatura.$invalid || main.novo" ng-click="main.editar()">
+          <i class="fa fa-pencil"></i> Editar
+        </button>
+        <button type="button" class="btn btn-danger" ng-click="main.excluir()" ng-disabled="main.novo || frmNovaAssinatura.$invalid">
+          <i class="fa fa-trash"></i> Excluir
+        </button>
+        <button type="button" class="btn btn-default" ng-click="main.cancelar()">
+          <i class="fa fa-times"></i> Cancelar
+        </button>
+        <button type="button" class="btn btn-success" ng-disabled="frmNovaAssinatura.$invalid" ng-click="main.gerar()">
+          <i class="fa fa-download"></i> Download
+        </button>
+      </div>
+    </div>
+</form>
+  <div class="row" ng-show="main.assinatura">
+    <div class="col-sm-12">
+      <div id="pre_conteudo">
+        <div id="conteudo">
+          <h5>
+            <p>
+              <strong>Cordialmente,
+                <br />
+                <br /> {{main.assinatura.nome}}</strong>
+          </h5>
+          <br />
+          </p>
+          <p id="cargo">{{main.assinatura.cargo}}</p>
+          <br />
+          <p id="menor">Unidade {{main.assinatura.unidade.label}}
+            <br /> <i class="fa fa-phone"></i> {{main.assinatura.fixo}}
+            <br /> <i class="fa fa-phone"></i> {{main.assinatura.celular}}
+            <br /> <i class="fa fa-envelope"></i> {{main.assinatura.email}}
+            <br /> <i class="fa fa-globe"></i> <a href="http://www.planosassessoria.com.br">www.planosassessoria.com.br</a>
+            <br /> "Antes de imprimir, pense em seu compromisso
+            <br />com o Meio Ambiente e com a redução de custos"</p>
+          <br />
+          <div id="linha"></div>
+          <img id="imagem" src="images/logo2.png" alt="Logo Planos" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <img src="" id="render" />
+  </div>
+</div>
+<div class="modal fade" id="dlgNovaUnidade" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="">Nova Unidade</h4>
+      </div>
+      <form name="frmNovaUnidade" ng-submit="main.salvarUnidade()">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="txtCidade">Cidade:</label>
+                <input type="text" class="form-control" id="txtCidade" required="required" ng-model="main.unidade.cidade">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="txtEstado">UF:</label>
+                <input type="text" class="form-control" id="txtEstado" required="required" maxlength="2" ng-model="main.unidade.estado">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="txtEstado">UF:</label>
+                <span class="form-control">{{main.unidade.cidade | uppercase}} - {{main.unidade.estado | uppercase}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" ng-disabled="frmNovaUnidade.$invalid">Salvar</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
